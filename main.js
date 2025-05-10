@@ -5,6 +5,16 @@ const path = require("path");
 const { fileURLToPath } = require("url");
 const fetch = require("node-fetch");
 
+/**
+ * Resolves a file input path, converting it to a local file path if it is a file URL.
+ * If the input path is an HTTP URL, it returns the URL unchanged.
+ * For any other path formats, it returns the input path as is.
+ *
+ * @param {string} inputPath - The path to resolve, can be a file URL, HTTP URL, or a local path.
+ * @returns {string} - The resolved file path.
+ * @throws {Error} - If there is an error resolving the file input path.
+ */
+
 function resolveFileInput(inputPath) {
   try {
     if (inputPath.startsWith("file://")) {
@@ -18,6 +28,13 @@ function resolveFileInput(inputPath) {
   }
 }
 
+/**
+ * Loads an image from a URL or a local file path and returns its buffer.
+ *
+ * @param {string} inputPath - The URL or local file path of the image to load.
+ * @returns {Promise<Buffer>} - The image buffer.
+ * @throws {Error} - If there is an error loading the image.
+ */
 async function loadImageBuffer(inputPath) {
   try {
     const resolved = resolveFileInput(inputPath);
@@ -32,6 +49,11 @@ async function loadImageBuffer(inputPath) {
   }
 }
 
+/**
+ * Generates a random timestamp in the format "X:YY am/pm" where X is an hour between 1-12 and YY is a minute between 0-59.
+ * @returns {string} - The random timestamp.
+ * @throws {Error} - If there is an error generating the random timestamp.
+ */
 function getRandomTimestamp() {
   try {
     const hour = Math.floor(Math.random() * 12) + 1;
@@ -45,6 +67,23 @@ function getRandomTimestamp() {
   }
 }
 
+/**
+ * Generates a fake Discord message screenshot.
+ *
+ * @param {Object} options - The options to use when generating the fake Discord message.
+ * @param {string} [options.pfpPath="https://i.postimg.cc/Prhch3nx/image.png"] - The URL or local file path of the user's profile picture.
+ * @param {string} [options.outputPath="fake_discord_message.png"] - The path where the generated screenshot will be saved.
+ * @param {string} [options.username="Ethanol"] - The username to display.
+ * @param {string} [options.timestamp] - The timestamp to display. If not provided, a random one is generated.
+ * @param {string} [options.message="C'est la vie"] - The message content.
+ * @param {string} [options.backgroundColor] - The background color of the message box.
+ * @param {string} [options.usernameColor] - The color of the username text.
+ * @param {string} [options.timestampColor] - The color of the timestamp text.
+ * @param {string} [options.messageColor] - The color of the message text.
+ * @param {number} [options.timestampXOffset] - The horizontal offset for the timestamp (helpful for aligning with longer usernames).
+ * @returns {Promise<string>} - The path to the generated screenshot.
+ * @throws {Error} - If there is an error generating the fake Discord message.
+ */
 async function generateDiscordMessage({
   pfpPath = "https://i.postimg.cc/Prhch3nx/image.png",
   outputPath = "fake_discord_message.png",
