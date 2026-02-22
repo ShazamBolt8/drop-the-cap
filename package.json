@@ -5,7 +5,7 @@
     "sharp": "^0.34.1"
   },
   "name": "drop-the-cap",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generates fake discord screenshots",
   "main": "main.js",
   "devDependencies": {
